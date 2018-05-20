@@ -1,0 +1,64 @@
+<div class="container painter">
+  <div class="d-flex justify-content-end">
+    <div class="painter-brushes">
+      <img
+        *ngFor="let brush_url of brushes_urls"
+        (click)="selectBrush($event)"
+        [src]="brush_url"
+        >
+    </div>
+
+
+    <div class="canvas-container">
+      <canvas
+        id="myCanvas"
+        [height]="height"
+        [width]="width"
+        style="border:1px solid #000000;"
+      >
+      </canvas>
+    </div>
+  </div>
+
+  <div class="painter-tools">
+    <div class="painter-tool-item">
+      <label for="select-painter-mode">Инструмент</label>
+      <select id="select-painter-mode" [(ngModel)]="painter.tool">
+        <option *ngFor="let tool of painter.tool_keys" [ngValue]="tool">{{ tool }}</option>
+      </select>
+    </div>
+
+    <div class="painter-tool-item">
+      <label for="select-painter-color">Цвет</label>
+      <select id="select-painter-color" [(ngModel)]="painter.color">
+        <option *ngFor="let color of painter.colors" [ngValue]="color" [style.background]="color">{{ color }}</option>
+      </select>
+    </div>
+
+    <div class="painter-brush-tools" [hidden]="painter.tool == 'pen'">
+      <div class="painter-tool-item">
+        <label for="select-pen-random">Интервал</label>
+        <select id="select-brush-interval" [(ngModel)]="painter.interval">
+          <option *ngFor="let i of painter.penSizeRange" [ngValue]="i">{{ i }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="painter-pen-tools" [hidden]="painter.tool == 'brush'">
+      <div class="painter-tool-item">
+        <label for="select-pen-size">Размер</label>
+        <select id="select-pen-size" [(ngModel)]="painter.penSize">
+          <option *ngFor="let i of painter.penSizeRange" [ngValue]="i">{{ i }}</option>
+        </select>
+      </div>
+
+      <div class="painter-tool-item">
+        <label for="select-pen-random">Разброс</label>
+        <select id="select-pen-random" [(ngModel)]="painter.random">
+          <option *ngFor="let i of painter.penSizeRange" [ngValue]="i">{{ i }}</option>
+        </select>
+      </div>
+    </div>
+    <button class="btn" (click)="fill()">Заливка</button>
+  </div>
+</div>
